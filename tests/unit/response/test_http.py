@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from phi.response.base import FiniteResponseMixin, BaseResponse
+from phi.response.finite import FiniteResponse
 from phi.response.http import HttpResponse
 
 
@@ -10,7 +10,7 @@ class TestHttpResponse(object):
     def http_res(self):
         return HttpResponse("ala ma kota")
 
-    @pytest.mark.parametrize("base_cls", [FiniteResponseMixin, BaseResponse])
+    @pytest.mark.parametrize("base_cls", [FiniteResponse])
     def test_inheritance(self, base_cls, http_res):
         assert isinstance(http_res, base_cls)
 

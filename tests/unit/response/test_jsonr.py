@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from phi.response.base import FiniteResponseMixin, BaseResponse
+from phi.response.finite import FiniteResponse
 from phi.response.jsonr import JsonResponse
 
 
@@ -10,7 +10,7 @@ class TestJsonResponse(object):
     def json_res(self):
         return JsonResponse({"test": 1})
 
-    @pytest.mark.parametrize("base_cls", [FiniteResponseMixin, BaseResponse])
+    @pytest.mark.parametrize("base_cls", [FiniteResponse])
     def test_inheritance(self, base_cls, json_res):
         assert isinstance(json_res, base_cls)
 

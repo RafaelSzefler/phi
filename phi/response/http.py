@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from phi.response.base import BaseResponse, FiniteResponseMixin
+from phi.response.finite import FiniteResponse
 
 
-class HttpResponse(FiniteResponseMixin, BaseResponse):
+class HttpResponse(FiniteResponse):
     content_type = "text/html"
 
     def __init__(self, content, content_type=None, status=None):

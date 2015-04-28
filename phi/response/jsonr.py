@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from phi.dependencies import json
-from phi.response.base import BaseResponse, FiniteResponseMixin
+from phi.response.finite import FiniteResponse
 
 
-class JsonResponse(FiniteResponseMixin, BaseResponse):
+class JsonResponse(FiniteResponse):
     content_type = "application/json"
 
     def __init__(self, content, status=None):
