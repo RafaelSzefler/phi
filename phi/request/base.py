@@ -34,3 +34,9 @@ class BaseRequest(object):
     @property
     def content(self):
         raise NotImplementedError
+
+    def is_ajax(self):
+        header = self.headers.get("X-Requested-With")
+        if hasattr(header, "lower"):
+            header = header.lower()
+        return header == "xmlhttprequest"

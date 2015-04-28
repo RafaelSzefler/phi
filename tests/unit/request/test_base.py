@@ -34,3 +34,13 @@ class TestBaseRequest(object):
     def test_not_implemented_properties(self, attr, req):
         with pytest.raises(NotImplementedError):
             getattr(req, attr)
+
+    @pytest.mark.parametrize("header, result", [
+        (None, False),
+        ("blah", False),
+        ("XMLHttpRequest", True),
+        ("xmlhttprequest", True)
+    ])
+    def test_is_ajax(self, header, result, req):
+        req.headers["X-Requested-With"] = header
+        assert req.is_ajax() is result
