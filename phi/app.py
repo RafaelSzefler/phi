@@ -21,7 +21,7 @@ class Application(object):
         self._url_router = url_router
         self._middleware_handler = middleware_handler
         self._request_builder = request_builder
-        self._exception_handler = default_exception_handler
+        self._exception_handler = exception_handler
 
     def _get_handler_and_params(self, request):
         try:
