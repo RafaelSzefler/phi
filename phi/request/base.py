@@ -25,10 +25,20 @@ class BaseRequest(object):
 
     @property
     def body(self):
+        if CACHED_BODY_KEY not in self._cache:
+            self._cache[CACHED_BODY_KEY] = self._get_body()
+        return self._cache[CACHED_BODY_KEY]
+
+    def _get_body(self):
         raise NotImplementedError
 
     @property
     def content(self):
+        if CACHED_CONTENT_KEY not in self._cache:
+            self._cache[CACHED_CONTENT_KEY] = self._get_content()
+        return self._cache[CACHED_CONTENT_KEY]
+
+    def _get_content(self):
         raise NotImplementedError
 
     @property

@@ -19,14 +19,14 @@ class TestFiniteRequest(object):
         return FiniteRequest()
 
     def test_null_content(self, fin_req):
-        assert fin_req.content is None
+        assert fin_req._get_content() is None
 
     def test_content_stream(self, fin_req, stream):
         fin_req._content_stream = stream
         fin_req.content_length = 11
-        assert fin_req.content == "ala ma kota"
+        assert fin_req._get_content() == "ala ma kota"
 
     def test_short_length_content_stream(self, fin_req, stream):
         fin_req._content_stream = stream
         fin_req.content_length = 4
-        assert fin_req.content == "ala "
+        assert fin_req._get_content() == "ala "

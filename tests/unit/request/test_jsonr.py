@@ -17,4 +17,4 @@ class TestJsonRequest(object):
     def test_body(self, stream):
         req = JsonRequest()
         req._content_stream = stream
-        assert req.body == {"test": 1, "foo": "bar"}
+        assert req._get_body() == {"test": 1, "foo": "bar"}

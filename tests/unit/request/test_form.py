@@ -30,4 +30,4 @@ class TestFormRequest(object):
         stream.seek(0)
         form_req._content_stream = stream
         form_req.content_length = len(body)
-        assert form_req.body == content
+        assert form_req._get_body() == content
