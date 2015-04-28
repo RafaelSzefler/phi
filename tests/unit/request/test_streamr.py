@@ -4,6 +4,6 @@ from phi.request.streamr import StreamRequest
 
 class TestStreamRequest(object):
 
-    def test_body_iterator(self):
+    def test_content_iterator(self):
         req = StreamRequest()
-        req.body_iterator  # TODO
+        req.content_iterator  # TODO

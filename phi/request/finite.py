@@ -5,7 +5,7 @@ from phi.request.base import BaseRequest, CACHED_BODY_KEY
 class FiniteRequest(BaseRequest):
 
     @property
-    def body(self):
+    def content(self):
         if CACHED_BODY_KEY not in self._cache:
             content = None
             if self._content_stream is not None:

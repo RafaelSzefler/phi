@@ -25,9 +25,9 @@ class TestFormRequest(object):
             {"name": ["\xc4\x85\xc5\xba\xc5\xba\xc4\x87 ed f"]}
         )
     ])
-    def test_content(self, body, content, form_req):
+    def test_body(self, body, content, form_req):
         stream = BytesIO(body)
         stream.seek(0)
         form_req._content_stream = stream
         form_req.content_length = len(body)
-        assert form_req.content == content
+        assert form_req.body == content

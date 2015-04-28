@@ -7,9 +7,9 @@ from phi.request.finite import FiniteRequest
 class JsonRequest(FiniteRequest):
 
     @property
-    def content(self):
+    def body(self):
         if CACHED_CONTENT_KEY not in self._cache:
-            body = self.body
-            content = json.loads(body)
-            self._cache[CACHED_CONTENT_KEY] = content
+            content = self.content
+            body = json.loads(content)
+            self._cache[CACHED_CONTENT_KEY] = body
         return self._cache[CACHED_CONTENT_KEY]

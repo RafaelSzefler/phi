@@ -5,5 +5,5 @@ from phi.request.base import BaseRequest
 class StreamRequest(BaseRequest):
 
     @property
-    def body_iterator(self):
+    def content_iterator(self):
         pass  # TODO

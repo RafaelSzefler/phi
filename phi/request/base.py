@@ -28,11 +28,11 @@ class BaseRequest(object):
         raise NotImplementedError
 
     @property
-    def body_iterator(self):
+    def content(self):
         raise NotImplementedError
 
     @property
-    def content(self):
+    def content_iterator(self):
         raise NotImplementedError
 
     def is_ajax(self):

@@ -30,7 +30,7 @@ class TestBaseRequest(object):
         assert req.query_params == {}
         assert req._cache == {}
 
-    @pytest.mark.parametrize("attr", ["body", "body_iterator", "content"])
+    @pytest.mark.parametrize("attr", ["body", "content_iterator", "content"])
     def test_not_implemented_properties(self, attr, req):
         with pytest.raises(NotImplementedError):
             getattr(req, attr)

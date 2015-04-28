@@ -8,10 +8,10 @@ from phi.request.finite import FiniteRequest
 class FormRequest(FiniteRequest):
 
     @property
-    def content(self):
+    def body(self):
         if CACHED_CONTENT_KEY not in self._cache:
-            body = self.body
-            unquoted_body = unquote(body)
-            parsed_body = parse_qs(unquoted_body)
-            self._cache[CACHED_CONTENT_KEY] = parsed_body
+            content = self.content
+            unquoted_body = unquote(content)
+            body = parse_qs(unquoted_body)
+            self._cache[CACHED_CONTENT_KEY] = body
         return self._cache[CACHED_CONTENT_KEY]
