@@ -1,4 +1,4 @@
-00# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from phi.defaults import default_exception_handler
 from phi.exceptions import HttpNotFound
 from phi.request.builder import RequestBuilder
