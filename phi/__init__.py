@@ -3,6 +3,7 @@ version = "0.0.1"
 
 from phi.app import Application
 from phi.middleware import MiddlewareHandler
+from phi.response.file import FileResponse
 from phi.response.http import HttpResponse
 from phi.response.jsonr import JsonResponse
 from phi.testing.core import TestApplication

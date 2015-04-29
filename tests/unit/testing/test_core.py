@@ -58,12 +58,12 @@ class TestTestApplication(object):
                 "test status",
                 [("my-header", "foo"), ("my-other-header", "baz")]
             )
-            return [1, 2]
+            return ["test1", "test2"]
 
         app.handle_wsgi.side_effect = new_handle_wsgi
         response = tapp._make_request(my_env)
         assert response == {
-            "body": [1, 2],
+            "body": "test1test2",
             "headers": {
                 "my-header": "foo",
                 "my-other-header": "baz"
