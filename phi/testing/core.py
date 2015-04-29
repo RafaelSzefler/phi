@@ -37,7 +37,9 @@ class TestApplication(object):
             response["status"] = status
             response["headers"] = dict(headers)
 
-        body = list(self._application.handle_wsgi(env, start_response))
+        body = self._application.handle_wsgi(env, start_response)
+        body = list(body)
+        body = "".join(body)
         response["body"] = body
         return response
 
