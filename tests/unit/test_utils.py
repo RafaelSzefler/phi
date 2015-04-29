@@ -69,7 +69,7 @@ class TestUtils(object):
         ("test=1", {"test": "1"}),
         (
             "name=%C4%85%C5%BA%C5%BA%C4%87+ed+f&blah=",
-            {"name": "\xc4\x85\xc5\xba\xc5\xba\xc4\x87 ed f"}
+            {"name": u"ąźźć ed f"}
         ),
         (
             "test=1&foo=2&test=3",

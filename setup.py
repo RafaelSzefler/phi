@@ -14,7 +14,7 @@ description = "Mini WebFramework"
 def read_requirements(filename):
     full_path = path.join(ROOT, filename)
     requirements = []
-    with open(full_path) as fo:
+    with open(full_path, "rb") as fo:
         for line in fo:
             line = line.decode("utf-8").strip()
             if line:
@@ -25,7 +25,7 @@ def read_requirements(filename):
 def get_version():
     init_file = path.join(ROOT, name, "__init__.py")
     pattern = re.compile('version = "(?P<ver>.*?)"')
-    with open(init_file) as fo:
+    with open(init_file, "rb") as fo:
         for line in fo:
             line = line.decode("utf-8")
             match = pattern.match(line)

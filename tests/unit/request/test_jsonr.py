@@ -8,7 +8,7 @@ from phi.request.jsonr import JsonRequest
 
 @pytest.fixture
 def stream():
-    io_stream = BytesIO('{"test": 1, "foo":  "bar"}')
+    io_stream = BytesIO(b'{"test": 1, "foo":  "bar"}')
     io_stream.seek(0)
     return io_stream
 

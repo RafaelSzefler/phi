@@ -19,7 +19,7 @@ class TestHttpResponse(object):
         assert http_res.status == 200
 
     def test_default__init__(self, http_res):
-        assert http_res.content == "ala ma kota"
+        assert http_res.content == b"ala ma kota"
         assert http_res.content_length == len("ala ma kota")
 
     def test_content_type__init__(self):

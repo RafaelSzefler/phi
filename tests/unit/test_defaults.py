@@ -12,7 +12,10 @@ def test_default_exception_handler():
 
 def test_default_exception_handler_exc():
     exc = Exception()
-    response = default_exception_handler(None, exc, 123)
+    try:
+        raise exc
+    except Exception as e:
+        response = default_exception_handler(None, e, 123)
     assert isinstance(response, HttpResponse)
     assert response.exception is exc
     assert response.status == 123

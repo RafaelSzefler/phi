@@ -90,7 +90,7 @@ class TestTestApplication(object):
             "REQUEST_METHOD": "XYZ",
             "wsgi.input": stream
         }
-        assert stream.read() == "ala ma kota"
+        assert stream.read() == b"ala ma kota"
 
     def test__build_env_no_body(self, tapp):
         env = tapp._build_env(
@@ -113,7 +113,7 @@ class TestTestApplication(object):
             "REQUEST_METHOD": "XYZ",
             "wsgi.input": stream
         }
-        assert stream.read() == ""
+        assert stream.read() == b""
 
     def test__update_headers(self, tapp):
         env = {}

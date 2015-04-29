@@ -8,7 +8,7 @@ from phi.request.finite import FiniteRequest
 
 @pytest.fixture
 def stream():
-    io_stream = BytesIO("ala ma kota")
+    io_stream = BytesIO(b"ala ma kota")
     io_stream.seek(0)
     return io_stream
 
