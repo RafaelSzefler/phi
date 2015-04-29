@@ -28,14 +28,19 @@ class TestBaseResponse(object):
     def test_defaults(self, key, value):
         assert getattr(BaseResponse, key) == value
 
+    @pytest.mark.parametrize("status, reason", STATUS_EXAMPLES)
+    def test_status_reason(self, status, reason, res):
+        res.status = status
+        assert res.status_reason == reason
+
     def test___init__(self, res):
         assert isinstance(res.headers, CaseInsensitiveDict)
 
-    @pytest.mark.parametrize("status, text", STATUS_EXAMPLES)
-    def test__get_wsgi_status(self, status, text, res):
-        result = "{status} {text}".format(
+    @pytest.mark.parametrize("status, reason", STATUS_EXAMPLES)
+    def test__get_wsgi_status(self, status, reason, res):
+        result = "{status} {reason}".format(
             status=status,
-            text=text
+            reason=reason
         )
         res.status = status
         assert res._get_wsgi_status() == result

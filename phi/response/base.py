@@ -19,12 +19,14 @@ class BaseResponse(object):
     def __init__(self):
         self.headers = CaseInsensitiveDict()
 
+    @property
+    def status_reason(self):
+        return STATUSES.get(self.status, UNKNOWN_STATUS)
+
     def _get_wsgi_status(self):
-        status = self.status
-        status_name = STATUSES.get(status, UNKNOWN_STATUS)
-        return "{status} {status_name}".format(
-            status=status,
-            status_name=status_name
+        return "{status} {reason}".format(
+            status=self.status,
+            reason=self.status_reason
         )
 
     def _update_header_list_with_content_length(self, header_list):
