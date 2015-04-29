@@ -5,7 +5,7 @@ from phi.response.base import BaseResponse
 from phi.utils import CaseInsensitiveDict
 from phi.constants import STATUSES
 
-from tests.utils import mock
+from tests.dependencies import mock
 
 STATUS_EXAMPLES = list(STATUSES.items())
 STATUS_EXAMPLES.append((777, "Unknown"))

@@ -3,7 +3,7 @@ import pytest
 
 from phi.middleware import MiddlewareHandler
 
-from tests.utils import mock
+from tests.dependencies import mock
 
 
 @pytest.fixture

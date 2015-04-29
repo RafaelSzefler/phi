@@ -8,7 +8,7 @@ from phi.request.form import FormRequest
 from phi.request.jsonr import JsonRequest
 from phi.request.streamr import StreamRequest
 
-from tests.utils import mock
+from tests.dependencies import mock
 
 
 @pytest.fixture(scope="module")

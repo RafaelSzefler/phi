@@ -5,7 +5,7 @@ import pytest
 from phi.url_routing.pattern import Pattern, PatternBuilder
 from phi.exceptions import ValidationError
 
-from tests.utils import mock
+from tests.dependencies import mock
 
 
 @pytest.fixture(scope="module")

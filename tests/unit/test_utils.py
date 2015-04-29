@@ -15,7 +15,7 @@ from phi.exceptions import (
     HttpBadRequest
 )
 
-from tests.utils import mock
+from tests.dependencies import mock
 
 
 @pytest.fixture

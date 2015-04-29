@@ -6,7 +6,7 @@ from phi.request.base import BaseRequest
 from phi.url_routing.pattern import PatternBuilder, Pattern
 from phi.url_routing.router import URLRouter
 
-from tests.utils import mock
+from tests.dependencies import mock
 
 
 @pytest.fixture(scope="function")

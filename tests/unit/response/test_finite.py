@@ -3,7 +3,7 @@ import pytest
 
 from phi.response.finite import FiniteResponse
 
-from tests.utils import mock
+from tests.dependencies import mock
 
 
 class TestFiniteResponseMixin(object):

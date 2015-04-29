@@ -7,7 +7,7 @@ from phi.request.builder import RequestBuilder
 from phi.response.base import BaseResponse
 from phi.url_routing.router import URLRouter
 
-from tests.utils import mock
+from tests.dependencies import mock
 
 
 class TestApp(object):

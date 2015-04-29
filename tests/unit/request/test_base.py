@@ -4,7 +4,7 @@ import pytest
 from phi.request.base import BaseRequest
 from phi.utils import CaseInsensitiveDict
 
-from tests.utils import mock
+from tests.dependencies import mock
 
 
 class TestBaseRequest(object):
