@@ -11,6 +11,14 @@ from tests.dependencies import mock
 
 
 class TestApp(object):
+    def test_init_default(self):
+        app = Application()
+
+    def test_init_custom_request_builder_factory(self):
+        custom_factory = lambda: mock.sentinel.request_builder
+        app = Application(request_builder_factory=custom_factory)
+        assert app._request_builder == mock.sentinel.request_builder
+
     @mock.patch.object(URLRouter, "get_handler_and_params_from_request")
     def test__get_handler_and_params(self, m_get, app, request):
         req = mock.Mock(spec=BaseRequest)

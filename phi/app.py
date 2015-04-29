@@ -4,6 +4,7 @@ from phi.exceptions import HttpNotFound
 from phi.request.builder import RequestBuilder
 from phi.utils import get_status_from_exc
 
+
 NOT_FOUND_PARAMS = {
     "exc": None,
     "status": 404
@@ -15,12 +16,12 @@ class Application(object):
         self,
         url_router=None,
         middleware_handler=None,
-        request_builder=RequestBuilder(),
+        request_builder_factory=RequestBuilder,
         exception_handler=default_exception_handler
     ):
         self._url_router = url_router
         self._middleware_handler = middleware_handler
-        self._request_builder = request_builder
+        self._request_builder = request_builder_factory()
         self._exception_handler = exception_handler
 
     def _get_handler_and_params(self, request):
