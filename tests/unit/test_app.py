@@ -178,14 +178,14 @@ class TestApp(object):
         m_handle.assert_called_once_with(req, exc)
         assert res == m_handle(req, exc)
 
-    def test__send_headers_to_response(self, app):
+    def test__start_response(self, app):
         res = mock.Mock(spec=BaseResponse)
         res._get_wsgi_status.return_value = "200 Test"
         res._get_wsgi_headers.return_value = [("Content-Type", "Test")]
 
         start_response = mock.Mock()
 
-        app._send_headers_to_response(res, start_response)
+        app._start_response(res, start_response)
         start_response.assert_called_once_with(
             "200 Test", [("Content-Type", "Test")]
         )
@@ -193,18 +193,18 @@ class TestApp(object):
     @mock.patch.object(RequestBuilder, "build_request_from_env")
     @mock.patch.object(Application, "_get_handler_and_params")
     @mock.patch.object(Application, "_get_response")
-    @mock.patch.object(Application, "_send_headers_to_response")
-    def test_handle_wsgi(self, m_send, m_resp, m_handle, m_build, app):
+    @mock.patch.object(Application, "_start_response")
+    def test_handle_wsgi_request(self, m_send, m_resp, m_handle, m_build, app):
         req = mock.Mock(spec=BaseRequest)
         start_response = mock.Mock()
         resp = mock.Mock(spec=BaseResponse)
         resp._get_wsgi_content_iterator.return_value = [1, 2, 3]
         m_resp.return_value = resp
         m_handle.return_value = ("test", "test")
-        result = list(app.handle_wsgi(req, start_response))
+        result = list(app.handle_wsgi_request(req, start_response))
         assert result == [1, 2, 3]
         for mocked in [m_send, m_resp, m_handle, m_build]:
             assert mocked.call_count == 1
 
     def test_call(self):
-        assert Application.__call__ == Application.handle_wsgi
+        assert Application.__call__ == Application.handle_wsgi_request
