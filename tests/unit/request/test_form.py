@@ -22,10 +22,6 @@ class TestFormRequest(object):
             "name=test&blah=asdfdasf+&check=on",
             {"blah": "asdfdasf ", "name": "test", "check": "on"}
         ),
-        (
-            "name=%C4%85%C5%BA%C5%BA%C4%87+ed+f&blah=",
-            {"name": u"ąźźć ed f"}
-        )
     ])
     def test_body(self, body, content, form_req):
         stream = BytesIO(body.encode("utf-8"))
