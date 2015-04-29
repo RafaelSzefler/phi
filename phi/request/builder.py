@@ -16,7 +16,7 @@ REPLACE_UNDERSCORES = re.compile("_")
 
 ENV_ATTR_KEYS_MAP = (
     ("url", "PATH_INFO"),
-    ("url_scheme", "wsgi.url_scheme"),
+    ("scheme", "wsgi.url_scheme"),
     ("method", "REQUEST_METHOD"),
     ("content_type", "CONTENT_TYPE"),
     ("content_length", "CONTENT_LENGTH"),

@@ -16,7 +16,7 @@ class TestBaseRequest(object):
         ("env", None),
         ("method", None),
         ("url", None),
-        ("url_scheme", None),
+        ("scheme", None),
         ("content_type", None),
         ("content_length", None),
         ("query_string", None),

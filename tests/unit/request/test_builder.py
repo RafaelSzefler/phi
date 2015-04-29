@@ -50,7 +50,7 @@ class TestRequestBuilder(object):
         builder._build_constant_keys(req, env)
         assert req.env is env
         assert req.url == "/test"
-        assert req.url_scheme == "HTTPS"
+        assert req.scheme == "HTTPS"
         assert req.method == "GET"
         assert req.content_type == "blah"
         assert req.content_length == 111
@@ -71,7 +71,7 @@ class TestRequestBuilder(object):
         builder._build_constant_keys(req, env)
         assert req.env is env
         assert req.url == "/test"
-        assert req.url_scheme == "HTTPS"
+        assert req.scheme == "HTTPS"
         assert req.method == "GET"
         assert req.content_type == "blah"
         assert req.content_length is None
