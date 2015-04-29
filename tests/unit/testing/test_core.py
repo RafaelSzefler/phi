@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 
+from phi import Application
 # We do that renaming so that py.test won't try to interpret
 # TestApplication as a test case.
 from phi.testing.core import TestApplication as CTestApplication
@@ -49,7 +50,7 @@ class TestTestApplication(object):
         request.addfinalizer(revert)
 
         my_env = mock.Mock(spec=dict)
-        app = mock.Mock(spec=CTestApplication)
+        app = mock.Mock(spec=Application)
         tapp._application = app
 
         def new_handle_wsgi(env, start):
