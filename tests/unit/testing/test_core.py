@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from phi.testing.core import TestApplication
+# We do that renaming so that py.test won't try to interpret
+# TestApplication as a test case.
+from phi.testing.core import TestApplication as CTestApplication
 
 from tests.dependencies import mock
 
 
 @pytest.fixture(scope="module")
 def tapp(app):
-    return TestApplication(app)
+    return CTestApplication(app)
 
 
 @pytest.fixture
@@ -29,8 +31,8 @@ class TestTestApplication(object):
     def test___init__(self, tapp, app):
         assert tapp._application is app
 
-    @mock.patch.object(TestApplication, "_build_env")
-    @mock.patch.object(TestApplication, "_make_request")
+    @mock.patch.object(CTestApplication, "_build_env")
+    @mock.patch.object(CTestApplication, "_make_request")
     def test_request(self, m_make, m_build, tapp, tparams):
         resp = tapp.request(**tparams)
         m_build.assert_called_once_with(**tparams)

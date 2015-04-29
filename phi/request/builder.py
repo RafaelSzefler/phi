@@ -18,7 +18,7 @@ ENV_ATTR_KEYS_MAP = (
     ("url", "PATH_INFO"),
     ("scheme", "wsgi.url_scheme"),
     ("method", "REQUEST_METHOD"),
-    ("content_type", "CONTENT_TYPE"),
+    ("_content_type", "CONTENT_TYPE"),
     ("content_length", "CONTENT_LENGTH"),
     ("query_string", "QUERY_STRING"),
     ("remote_user", "REMOTE_USER"),

@@ -17,7 +17,7 @@ class TestBaseRequest(object):
         ("method", None),
         ("url", None),
         ("scheme", None),
-        ("content_type", None),
+        ("_content_type", None),
         ("content_length", None),
         ("query_string", None),
         ("remote_user", None),
@@ -32,7 +32,7 @@ class TestBaseRequest(object):
         assert req.query_params == {}
         assert req._cache == {}
 
-    @pytest.mark.parametrize("attr", ["body", "content_iterator", "content"])
+    @pytest.mark.parametrize("attr", ["body", "content"])
     def test_not_implemented_properties(self, attr, req):
         with pytest.raises(NotImplementedError):
             getattr(req, attr)
@@ -42,6 +42,10 @@ class TestBaseRequest(object):
         with pytest.raises(NotImplementedError):
             fn = getattr(req, attr)
             fn()
+
+    def test_content_iterator(self, req):
+        with pytest.raises(NotImplementedError):
+            req.content_iterator()
 
     @pytest.mark.parametrize("attr", ["body", "content"])
     def test_data_caching(self, attr, req):
@@ -61,3 +65,16 @@ class TestBaseRequest(object):
     def test_is_ajax(self, header, result, req):
         req.headers["X-Requested-With"] = header
         assert req.is_ajax() is result
+
+    @pytest.mark.parametrize("ct, result", [
+        ("xyz", "xyz"),
+        ("  text/plain ", "text/plain"),
+        (
+            "multipart/form-data ; "
+            "boundary=----WebKitFormBoundarymB1eHHSjW3F8yZhz",
+            "multipart/form-data"
+        )
+    ])
+    def test_content_type(self, ct, result, req):
+        req._content_type = ct
+        assert req.content_type == result

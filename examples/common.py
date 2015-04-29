@@ -21,3 +21,16 @@ FORM_HTML = """
     </form>
 </body>
 """
+
+UPLOAD_HTML = """
+<!DOCTYPE html>
+<head></head>
+<body>
+    <div><strong>The File Form</strong></div>
+    <form action="/form" method="post" enctype="multipart/form-data">
+        <div><input name="name" type="text" /></div>
+        <div><input name="file" type="file" /></div>
+        <div><button type="submit">Send</button></div>
+    </form>
+</body>
+"""

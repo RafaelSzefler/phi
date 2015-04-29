@@ -3,6 +3,7 @@ from phi.utils import CaseInsensitiveDict
 
 CACHED_BODY_KEY = "body"
 CACHED_CONTENT_KEY = "content"
+CACHED_CONTENT_TYPE_KEY = "content_type"
 
 
 class BaseRequest(object):
@@ -10,7 +11,7 @@ class BaseRequest(object):
     method = None
     url = None
     scheme = None
-    content_type = None
+    _content_type = None
     content_length = None
     charset = "utf-8"
     query_string = None
@@ -22,6 +23,16 @@ class BaseRequest(object):
         self.headers = CaseInsensitiveDict()
         self.query_params = {}
         self._cache = {}
+
+    @property
+    def content_type(self):
+        if CACHED_CONTENT_TYPE_KEY not in self._cache:
+            content = self._content_type
+            content = content.partition(";")
+            content = content[0]
+            content = content.strip()
+            self._cache[CACHED_CONTENT_TYPE_KEY] = content
+        return self._cache[CACHED_CONTENT_TYPE_KEY]
 
     @property
     def body(self):
@@ -41,7 +52,6 @@ class BaseRequest(object):
     def _get_content(self):
         raise NotImplementedError
 
-    @property
     def content_iterator(self):
         raise NotImplementedError
 
