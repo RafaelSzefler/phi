@@ -55,7 +55,7 @@ class TestRequestBuilder(object):
         assert req.content_type == "blah"
         assert req.content_length == 111
         assert req.query_string == "xyz=11&foo=bar&foo=baz"
-        assert req.query_params == {"xyz": ["11"], "foo": ["bar", "baz"]}
+        assert req.query_params == {"xyz": "11", "foo": ["bar", "baz"]}
         assert req.remote_user is None
         assert req.remote_addr is None
         assert req._content_stream == 1

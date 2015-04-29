@@ -5,7 +5,8 @@ from phi.utils import (
     CaseInsensitiveDict,
     capitalize_first_letter,
     capitalize_first_letters_in_sentence,
-    get_status_from_exc
+    get_status_from_exc,
+    parse_query_string
 )
 from phi.exceptions import (
     HttpException,
@@ -63,6 +64,21 @@ class TestUtils(object):
     ])
     def test_get_status_from_exc(self, exc, result):
         assert get_status_from_exc(exc) == result
+
+    @pytest.mark.parametrize("qs, data", [
+        ("test=1", {"test": "1"}),
+        (
+            "name=%C4%85%C5%BA%C5%BA%C4%87+ed+f&blah=",
+            {"name": "\xc4\x85\xc5\xba\xc5\xba\xc4\x87 ed f"}
+        ),
+        (
+            "test=1&foo=2&test=3",
+            {"test": ["1", "3"], "foo": "2"}
+        ),
+        ("foo=ala+ma++kota", {"foo": "ala ma  kota"})
+    ])
+    def test_parse_query_string(self, qs, data):
+        assert parse_query_string(qs) == data
 
 
 class TestCaseInsensitiveDict(object):

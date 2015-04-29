@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import re
 
+from six import iterkeys
+from six.moves.urllib.parse import parse_qs, unquote
+
 DIVIDE_RE = re.compile(r"\w+|\W+")
 
 
@@ -45,3 +48,16 @@ def capitalize_first_letters_in_sentence(sentence):
 
 def get_status_from_exc(e):
     return e.status if hasattr(e, "status") else 500
+
+
+def parse_query_string(qs):
+    data = unquote(qs)
+    data = parse_qs(data)
+    keys = list(iterkeys(data))
+    for key in keys:
+        value = data[key]
+        try:
+            value[1]
+        except IndexError:
+            data[key] = value[0]
+    return data

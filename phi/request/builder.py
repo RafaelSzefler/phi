@@ -2,13 +2,13 @@
 import re
 
 from six import iteritems
-from six.moves.urllib.parse import parse_qs
 
 from phi.request.base import BaseRequest
 from phi.request.content_request_mapping \
     import CONTENT_TYPE_TO_REQUEST_CLASS_MAP
 from phi.request.finite import FiniteRequest
 from phi.request.streamr import StreamRequest
+from phi.utils import parse_query_string
 
 
 HEADER_REGEX = re.compile("^HTTP_")
@@ -43,7 +43,7 @@ class RequestBuilder(object):
             if value not in (None, ""):
                 setattr(request, attr, value)
         if request.query_string:
-            request.query_params = parse_qs(request.query_string)
+            request.query_params = parse_query_string(request.query_string)
         if request.content_length is not None:
             request.content_length = int(request.content_length)
         request.env = env
