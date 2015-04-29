@@ -82,9 +82,18 @@ class TestRequestBuilder(object):
     @pytest.mark.parametrize("env, req_cls", [
         ({}, BaseRequest),
         ({"CONTENT_LENGTH": 1}, FiniteRequest),
-        ({"CONTENT_LENGTH": 1, "CONTENT_TYPE": "application/json"}, JsonRequest),
+        (
+            {"CONTENT_LENGTH": 1, "CONTENT_TYPE": "application/json"},
+            JsonRequest
+        ),
         ({"CONTENT_TYPE": "application/json"}, BaseRequest),
-        ({"CONTENT_LENGTH": 3, "CONTENT_TYPE": "application/x-www-form-urlencoded"}, FormRequest)
+        (
+            {
+                "CONTENT_LENGTH": 3,
+                "CONTENT_TYPE": "application/x-www-form-urlencoded"
+            },
+            FormRequest
+        )
     ])
     def test__get_request_class_from_env(self, env, req_cls, builder):
         request_class = builder._get_request_class_from_env(env)

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 
+from phi import Application
 # We do that renaming so that py.test won't try to interpret
 # TestApplication as a test case.
 from phi.testing.core import TestApplication as CTestApplication
@@ -48,8 +49,8 @@ class TestTestApplication(object):
 
         request.addfinalizer(revert)
 
-        my_env = mock.Mock()
-        app = mock.Mock()
+        my_env = mock.Mock(spec=dict)
+        app = mock.Mock(spec=Application)
         tapp._application = app
 
         def new_handle_wsgi(env, start):
@@ -60,7 +61,7 @@ class TestTestApplication(object):
             )
             return ["test1", "test2"]
 
-        app.handle_wsgi.side_effect = new_handle_wsgi
+        app.handle_wsgi_request.side_effect = new_handle_wsgi
         response = tapp._make_request(my_env)
         assert response == {
             "body": "test1test2",
