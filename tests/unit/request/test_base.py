@@ -43,10 +43,6 @@ class TestBaseRequest(object):
             fn = getattr(req, attr)
             fn()
 
-    def test_content_iterator(self, req):
-        with pytest.raises(NotImplementedError):
-            req.content_iterator()
-
     @pytest.mark.parametrize("attr", ["body", "content"])
     def test_data_caching(self, attr, req):
         with mock.patch.object(BaseRequest, "_get_"+attr) as mocked:

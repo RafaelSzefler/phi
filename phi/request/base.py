@@ -52,9 +52,6 @@ class BaseRequest(object):
     def _get_content(self):
         raise NotImplementedError
 
-    def content_iterator(self):
-        raise NotImplementedError
-
     def is_ajax(self):
         header = self.headers.get("X-Requested-With")
         if hasattr(header, "lower"):

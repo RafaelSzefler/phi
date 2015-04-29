@@ -6,7 +6,6 @@ from phi.request.base import BaseRequest
 from phi.request.finite import FiniteRequest
 from phi.request.form import FormRequest
 from phi.request.jsonr import JsonRequest
-from phi.request.streamr import StreamRequest
 
 from tests.dependencies import mock
 
@@ -81,10 +80,10 @@ class TestRequestBuilder(object):
         assert req.remote_addr is None
 
     @pytest.mark.parametrize("env, req_cls", [
-        ({}, StreamRequest),
+        ({}, BaseRequest),
         ({"CONTENT_LENGTH": 1}, FiniteRequest),
         ({"CONTENT_LENGTH": 1, "CONTENT_TYPE": "application/json"}, JsonRequest),
-        ({"CONTENT_TYPE": "application/json"}, StreamRequest),
+        ({"CONTENT_TYPE": "application/json"}, BaseRequest),
         ({"CONTENT_LENGTH": 3, "CONTENT_TYPE": "application/x-www-form-urlencoded"}, FormRequest)
     ])
     def test__get_request_class_from_env(self, env, req_cls, builder):

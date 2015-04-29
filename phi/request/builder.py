@@ -7,7 +7,6 @@ from phi.request.base import BaseRequest
 from phi.request.content_request_mapping \
     import CONTENT_TYPE_TO_REQUEST_CLASS_MAP
 from phi.request.finite import FiniteRequest
-from phi.request.streamr import StreamRequest
 from phi.utils import parse_query_string
 
 
@@ -53,7 +52,7 @@ class RequestBuilder(object):
 
         content_length = env.get("CONTENT_LENGTH")
         if content_length in (None, ""):  # We do accept 0 though
-            return StreamRequest
+            return request_class
 
         request_class = FiniteRequest
 
