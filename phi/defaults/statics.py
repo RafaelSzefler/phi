@@ -1,34 +1,9 @@
 # -*- coding: utf-8 -*-
 import re
-import traceback
 from os import path
 
-from phi.constants import STATUSES, UNKNOWN_STATUS
 from phi.response.http import HttpResponse
 from phi.response.file import FileResponse
-
-
-CONTENT = """
-<!DOCTYPE html>
-<head></head>
-<body>
-    <div><strong>{error}</strong></div>
-    <div><pre>{traceback}</pre></div>
-</body>
-"""
-
-
-def default_exception_handler(request, exc, status):
-    code = STATUSES.get(status, UNKNOWN_STATUS)
-    tr = "" if exc is None else traceback.format_exc()
-    content = CONTENT.format(
-        error="{status} {code}".format(status=status, code=code),
-        traceback=tr,
-    )
-    response = HttpResponse(content, status=status)
-    if exc is not None:
-        response.exception = exc
-    return response
 
 
 class StaticsHandler(object):
@@ -39,7 +14,8 @@ class StaticsHandler(object):
         self._root_folder = root_folder
 
     def _is_static_request(self, request):
-        return request.url.startswith(self._prefix)
+        url = request.url
+        return not url.endswith("/") and url.startswith(self._prefix)
 
     def _get_path_from_request(self, request):
         url = request.url

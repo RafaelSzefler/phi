@@ -2,7 +2,7 @@
 from os import path
 
 from phi import Application, URLRouter, HttpResponse, MiddlewareHandler
-from phi.defaults import StaticsHandler
+from phi.defaults.statics import StaticsHandler
 
 url_router = URLRouter()
 middleware_handler = MiddlewareHandler()

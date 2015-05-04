@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from phi.response.http import HttpResponse
-from phi.defaults import default_exception_handler
+from phi.defaults.exception_handler import default_exception_handler
 
 
 def test_default_exception_handler():

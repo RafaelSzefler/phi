@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from phi.app import Application
-from phi.defaults import default_exception_handler
+from phi.defaults.exception_handler import default_exception_handler
 from phi.exceptions import HttpException, HttpNotFound
 from phi.request.base import BaseRequest
 from phi.request.builder import RequestBuilder
@@ -12,7 +12,7 @@ from tests.dependencies import mock
 
 class TestApp(object):
     def test_init_default(self):
-        app = Application()
+        Application()
 
     def test_init_custom_request_builder_factory(self):
         custom_factory = lambda: mock.sentinel.request_builder

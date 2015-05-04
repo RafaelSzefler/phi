@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from phi.defaults import default_exception_handler
+from phi.defaults.exception_handler import default_exception_handler
 from phi.exceptions import HttpNotFound
 from phi.request.builder import RequestBuilder
 from phi.utils import get_status_from_exc
