@@ -59,23 +59,23 @@ class TestApp(object):
 
     def test__preprocess(self, app, request):
         def revert():
-            app._middleware_handler = None
+            app._middleware = None
         request.addfinalizer(revert)
 
-        app._middleware_handler = mock.Mock()
+        app._middleware = mock.Mock()
         request = mock.Mock()
         res = app._preprocess(request)
-        assert res == app._middleware_handler.preprocess(request)
+        assert res == app._middleware.preprocess(request)
 
     @mock.patch.object(Application, "_handle_exception")
     def test__preprocess_exc(self, m_exc, app, request):
         def revert():
-            app._middleware_handler = None
+            app._middleware = None
         request.addfinalizer(revert)
 
-        app._middleware_handler = mock.Mock()
+        app._middleware = mock.Mock()
         exc = Exception()
-        app._middleware_handler.preprocess.side_effect = exc
+        app._middleware.preprocess.side_effect = exc
         request = mock.Mock()
         res = app._preprocess(request)
         m_exc.assert_called_once_with(request, exc)
@@ -89,12 +89,12 @@ class TestApp(object):
     @mock.patch.object(Application, "_handle_exception")
     def test__postprocess(self, m_exc, app, request):
         def revert():
-            app._middleware_handler = None
+            app._middleware = None
         request.addfinalizer(revert)
 
-        app._middleware_handler = mock.Mock()
+        app._middleware = mock.Mock()
         exc = Exception()
-        app._middleware_handler.postprocess.side_effect = exc
+        app._middleware.postprocess.side_effect = exc
         request = mock.Mock()
         response = mock.Mock()
         res = app._postprocess(request, response)
@@ -103,14 +103,14 @@ class TestApp(object):
 
     def test__postprocess_exc(self, app, request):
         def revert():
-            app._middleware_handler = None
+            app._middleware = None
         request.addfinalizer(revert)
 
-        app._middleware_handler = mock.Mock()
+        app._middleware = mock.Mock()
         request = mock.Mock()
         response = mock.Mock()
         res = app._postprocess(request, response)
-        assert res == app._middleware_handler.postprocess(request, response)
+        assert res == app._middleware.postprocess(request, response)
 
     def test__postprocess_no_middle(self, app, request):
         request = mock.Mock()

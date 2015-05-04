@@ -15,12 +15,12 @@ class Application(object):
     def __init__(
         self,
         url_router=None,
-        middleware_handler=None,
+        middleware=None,
         request_builder_factory=RequestBuilder,
         exception_handler=default_exception_handler
     ):
         self._url_router = url_router
-        self._middleware_handler = middleware_handler
+        self._middleware = middleware
         self._request_builder = request_builder_factory()
         self._exception_handler = exception_handler
 
@@ -54,20 +54,20 @@ class Application(object):
         return response
 
     def _preprocess(self, request):
-        if not self._middleware_handler:
+        if not self._middleware:
             return None
 
         try:
-            return self._middleware_handler.preprocess(request)
+            return self._middleware.preprocess(request)
         except Exception as e:
             return self._handle_exception(request, e)
 
     def _postprocess(self, request, response):
-        if not self._middleware_handler:
+        if not self._middleware:
             return response
 
         try:
-            return self._middleware_handler.postprocess(request, response)
+            return self._middleware.postprocess(request, response)
         except Exception as e:
             return self._handle_exception(request, e)
 

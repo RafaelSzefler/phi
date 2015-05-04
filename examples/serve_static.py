@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from os import path
 
-from phi import Application, URLRouter, HttpResponse, MiddlewareHandler
+from phi import Application, URLRouter, HttpResponse, Middleware
 from phi.defaults.statics import StaticsHandler
 
 url_router = URLRouter()
-middleware_handler = MiddlewareHandler()
+middleware = Middleware()
 
 ROOT = path.realpath(path.dirname(__file__))
 
@@ -15,11 +15,11 @@ def home(request):
 
 url_router.add_route("home", "/", home)
 
-middleware_handler.add_pre_handler(StaticsHandler("/statics/", ROOT))
+middleware.add_pre_handler(StaticsHandler("/statics/", ROOT))
 
 application = Application(
     url_router=url_router,
-    middleware_handler=middleware_handler
+    middleware=middleware
 )
 
 

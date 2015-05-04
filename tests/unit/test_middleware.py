@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from phi.middleware import MiddlewareHandler
+from phi.middleware import Middleware
 
 from tests.dependencies import mock
 
 
 @pytest.fixture
 def mh():
-    return MiddlewareHandler()
+    return Middleware()
 
 
 class TestMiddlewareHandler(object):

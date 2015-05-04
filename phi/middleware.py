@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-class MiddlewareHandler(object):
+class Middleware(object):
     def __init__(self):
         self._pre_handlers = []
         self._post_handlers = []
