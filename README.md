@@ -38,3 +38,5 @@ from urls import url_router
 
 application = Application(url_router=url_router)
 ```
+
+Now you just simply bind `application` to any WSGI server.
