@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from phi.exceptions import RoutingException, HttpNotFound
-from phi.url_routing.pattern import PatternBuilder
+from phi.url_routing.pattern_builder import PatternBuilder
 
 
 class URLRouter(object):
 
-    def __init__(self, pattern_builder=PatternBuilder()):
+    def __init__(self, pattern_builder_factory=PatternBuilder):
         self._handlers = {}
         self._patterns = []
-        self._patter_builder = pattern_builder
+        self._patter_builder = pattern_builder_factory()
 
     def add_route(self, name, pattern, handler):
         if name in self._handlers:

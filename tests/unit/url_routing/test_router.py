@@ -3,7 +3,8 @@ import pytest
 
 from phi.exceptions import RoutingException, HttpNotFound
 from phi.request.base import BaseRequest
-from phi.url_routing.pattern import PatternBuilder, Pattern
+from phi.url_routing.pattern import Pattern
+from phi.url_routing.pattern_builder import PatternBuilder
 from phi.url_routing.router import URLRouter
 
 from tests.dependencies import mock
