@@ -1,22 +1,25 @@
 # -*- coding: utf-8 -*-
 from os import path
 
-from phi import Application, URLRouter, FileResponse
+from phi import Application, URLRouter, HttpResponse, MiddlewareHandler
+from phi.defaults import StaticsHandler
 
 url_router = URLRouter()
+middleware_handler = MiddlewareHandler()
 
-FILE_PATH = path.realpath(path.dirname(__file__))
-FILE_PATH = path.join(FILE_PATH, "test.js")
+ROOT = path.realpath(path.dirname(__file__))
 
 
 def home(request):
-    return FileResponse(FILE_PATH)
+    return HttpResponse("OK")
 
 url_router.add_route("home", "/", home)
 
+middleware_handler.add_pre_handler(StaticsHandler("/statics/", ROOT))
 
 application = Application(
     url_router=url_router,
+    middleware_handler=middleware_handler
 )
 
 
