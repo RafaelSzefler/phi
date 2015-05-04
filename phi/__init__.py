@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-version = "0.0.1"
+version = "0.1"
 
 from phi.app import Application
 from phi.middleware import Middleware
