@@ -2,7 +2,7 @@
 import re
 from os import path
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 ROOT = path.dirname(__file__)
 name = "phi"
@@ -34,6 +34,11 @@ def get_version():
     return None
 
 
+def get_packages():
+    pkgs = [name + "." + pkg for pkg in find_packages(name)]
+    return [name] + pkgs
+
+
 setup(
     name=name,
     version=get_version(),
@@ -41,5 +46,5 @@ setup(
     author=author,
     author_email=author_email,
     install_requires=read_requirements("requirements.txt"),
-    packages=[name],
+    packages=get_packages()
 )
