@@ -38,6 +38,8 @@ class Application(object):
                 request
             )
         except HttpNotFound:
+            if not self._exception_handler:
+                raise
             return self._exception_handler, NOT_FOUND_PARAMS
 
     def _get_response(self, handler, request, params):
@@ -73,6 +75,8 @@ class Application(object):
 
     def _handle_exception(self, request, exc):
         status = get_status_from_exc(exc)
+        if not self._exception_handler:
+            raise
         return self._exception_handler(request, exc, status)
 
     def _start_response(self, response, start_response):

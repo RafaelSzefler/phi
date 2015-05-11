@@ -4,6 +4,7 @@ from phi.utils import CaseInsensitiveDict
 CACHED_BODY_KEY = "body"
 CACHED_CONTENT_KEY = "content"
 CACHED_CONTENT_TYPE_KEY = "content_type"
+CACHED_COOKIES = "cookies"
 
 
 class BaseRequest(object):
@@ -23,6 +24,25 @@ class BaseRequest(object):
         self.headers = CaseInsensitiveDict()
         self.query_params = {}
         self._cache = {}
+
+    def _get_cookies(self):
+        cookies = {}
+        if "cookie" not in self.headers:
+            return cookies
+        parsed = self.headers["cookie"].split(";")
+        for part in parsed:
+            key, _, value = part.partition("=")
+            key = key.strip()
+            value = value.strip()
+            if key and value:
+                cookies[key] = value
+        return cookies
+
+    @property
+    def cookies(self):
+        if CACHED_COOKIES not in self._cache:
+            self._cache[CACHED_COOKIES] = self._get_cookies()
+        return self._cache[CACHED_COOKIES]
 
     @property
     def content_type(self):

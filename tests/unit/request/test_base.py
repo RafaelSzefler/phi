@@ -7,7 +7,7 @@ from phi.utils import CaseInsensitiveDict
 from tests.dependencies import mock
 
 
-class TestBaseRequest(object):
+class TestBasereq(object):
     @pytest.fixture
     def req(self):
         return BaseRequest()
@@ -43,7 +43,7 @@ class TestBaseRequest(object):
             fn = getattr(req, attr)
             fn()
 
-    @pytest.mark.parametrize("attr", ["body", "content"])
+    @pytest.mark.parametrize("attr", ["body", "content", "cookies"])
     def test_data_caching(self, attr, req):
         with mock.patch.object(BaseRequest, "_get_"+attr) as mocked:
             data = getattr(req, attr)
@@ -51,6 +51,18 @@ class TestBaseRequest(object):
             data2 = getattr(req, attr)
             assert mocked.call_count == 1
             assert data2 is data
+
+    def test__get_cookies_empty(self, req):
+        assert req._get_cookies() == {}
+
+    def test__get_cookies(self, req):
+        cstr = "$Version=1; Skin=new; test=alamakota;"
+        req.headers["Cookie"] = cstr
+        assert req._get_cookies() == {
+            "$Version": "1",
+            "Skin": "new",
+            "test": "alamakota"
+        }
 
     @pytest.mark.parametrize("header, result", [
         (None, False),

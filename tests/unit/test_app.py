@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import pytest
+
 from phi.app import Application
 from phi.defaults.exception_handler import default_exception_handler
 from phi.exceptions import HttpException, HttpNotFound
@@ -40,6 +42,18 @@ class TestApp(object):
             }
         )
 
+    @mock.patch.object(URLRouter, "get_handler_and_params_from_request")
+    def test__get_handler_and_params_exc_no_handler(self, m_get, app, request):
+        def revert():
+            app._exception_handler = default_exception_handler
+        request.addfinalizer(revert)
+        app._exception_handler = None
+        m_get.side_effect = HttpNotFound
+        req = mock.Mock(spec=BaseRequest)
+        with pytest.raises(HttpNotFound):
+            app._get_handler_and_params(req)
+        m_get.assert_called_once_with(req)
+
     @mock.patch("phi.app.get_status_from_exc")
     def test__handle_exception(self, m_get, app, request):
         def revert():
@@ -56,6 +70,25 @@ class TestApp(object):
         m_exc.assert_called_once_with(req, exc, 123)
         m_get.assert_called_once_with(exc)
         assert result == m_exc(req, exc, 123)
+
+    @mock.patch("phi.app.get_status_from_exc")
+    def test__handle_exception_no_handler(self, m_get, app, request):
+        def revert():
+            app._exception_handler = default_exception_handler
+        request.addfinalizer(revert)
+
+        m_get.return_value = 123
+        app._exception_handler = None
+
+        req = mock.Mock(spec=BaseRequest)
+        exc = None
+        try:
+            0/0
+        except Exception as e:
+            exc = e
+            with pytest.raises(ZeroDivisionError):
+                app._handle_exception(req, e)
+        m_get.assert_called_once_with(exc)
 
     def test__preprocess(self, app, request):
         def revert():
