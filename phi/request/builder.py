@@ -54,15 +54,13 @@ class RequestBuilder(object):
         if content_length in (None, ""):  # We do accept 0 though
             return request_class
 
-        request_class = FiniteRequest
-
         content_type = env.get("CONTENT_TYPE", "")
         content_type = content_type.partition(";")
         content_type = content_type[0]
         content_type = content_type.strip()
 
         request_class = CONTENT_TYPE_TO_REQUEST_CLASS_MAP.get(
-            content_type, request_class
+            content_type, FiniteRequest
         )
 
         return request_class

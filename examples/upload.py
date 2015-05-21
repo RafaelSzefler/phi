@@ -13,8 +13,11 @@ url_router.add_route("home", "/", home)
 
 
 def form(request):
-    for chunk in request.content_iterator():
-        print chunk
+    ats = request.attachments()
+    for at in ats:
+        print at
+        for chunk in at.content():
+            print chunk
 
     return HttpResponse(UPLOAD_HTML)
 
