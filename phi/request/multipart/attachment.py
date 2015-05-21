@@ -25,7 +25,7 @@ class Attachment(object):
         headers = b"".join(headers_list)
         headers = headers.split(CRLF)
         for header in headers:
-            key, _, value = header.partition(":")
+            key, _, value = header.partition(b":")
             key = key.strip()
             if not key:
                 continue

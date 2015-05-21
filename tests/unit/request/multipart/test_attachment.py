@@ -21,10 +21,11 @@ CONTENT = (
 
 @pytest.fixture
 def br():
-    stream = BytesIO(CONTENT)
-    length = len(CONTENT)
+    content = CONTENT.encode("utf-8")
+    stream = BytesIO(content)
+    length = len(content)
     reader = BoundaryReader(
-        stream, "foo", length
+        stream, b"foo", length
     )
     reader.MIN_BUFFER_SIZE = 12
     return reader
@@ -44,11 +45,11 @@ class TestAttachment(object):
         assert content == []
 
     def test_bad_headers(self):
-        content = "XYZ"
+        content = b"XYZ"
         stream = BytesIO(content)
         length = len(content)
         reader = BoundaryReader(
-            stream, "foo", length
+            stream, b"foo", length
         )
         reader.MIN_BUFFER_SIZE = 12
         reader.initialize(15)
@@ -58,12 +59,12 @@ class TestAttachment(object):
 
     @mock.patch.object(CaseInsensitiveDict, "__init__", return_value=None)
     def test_headers_caching(self, m_init, att):
-        for _ in xrange(5):
+        for _ in range(5):
             att.headers
         m_init.assert_called_once_with()
 
     def test_headers(self, att):
         assert att.headers == {
-            "type": "test",
-            "header": "xyz"
+            b"type": b"test",
+            b"header": b"xyz"
         }

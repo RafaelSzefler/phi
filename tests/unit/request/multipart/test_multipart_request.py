@@ -35,17 +35,18 @@ CONTENT = (
 @pytest.fixture
 def req():
     request = MultipartRequest()
-    request._content_type = "multipart/form-data; boundary=foo"
-    request._content_stream = BytesIO(CONTENT)
-    request.content_length = len(CONTENT)
+    request._content_type = b"multipart/form-data; boundary=foo"
+    content = CONTENT.encode("utf-8")
+    request._content_stream = BytesIO(content)
+    request.content_length = len(content)
     return request
 
 
 class TestMultipartRequest(object):
     @pytest.mark.parametrize("content_type", [
-        "multipart/form-data",
-        "multipart/form-data;",
-        "multipart/form-data; blah=1",
+        b"multipart/form-data",
+        b"multipart/form-data;",
+        b"multipart/form-data; blah=1",
     ])
     def test__get_boundary_value__exc(self, content_type, req):
         req._content_type = content_type
@@ -53,7 +54,7 @@ class TestMultipartRequest(object):
             req._get_boundary_value()
 
     def test__get_boundary_value(self, req):
-        assert req._get_boundary_value() == "foo"
+        assert req._get_boundary_value() == b"foo"
 
     def test_attachments(self, req):
         attachments = list(req.attachments())
@@ -64,27 +65,27 @@ class TestMultipartRequest(object):
 
         first_attachment = next(attachments)
         assert first_attachment.headers == {
-            "type": "test",
-            "header": "xyz"
+            b"type": b"test",
+            b"header": b"xyz"
         }
 
         content = list(first_attachment.content())
-        assert content == ["first attachment"]
+        assert content == [b"first attachment"]
 
         second_attachment = next(attachments)
         assert second_attachment.headers == {}
         content = list(second_attachment.content())
-        assert content == ["second attachment"]
+        assert content == [b"second attachment"]
 
         third_attachment = next(attachments)
         assert third_attachment.headers == {}
         content = list(third_attachment.content())
-        assert content == ["third attachment"]
+        assert content == [b"third attachment"]
 
         fourth_attachment = next(attachments)
-        assert fourth_attachment.headers == {"x": "Z"}
+        assert fourth_attachment.headers == {b"x": b"Z"}
         content = list(fourth_attachment.content())
-        assert content == ["fourth attachment"]
+        assert content == [b"fourth attachment"]
 
     @mock.patch.object(BoundaryReader, "MIN_BUFFER_SIZE", new=12)
     def test_attachments_content_small_buffer(self, req):
@@ -93,12 +94,12 @@ class TestMultipartRequest(object):
 
         first_attachment = next(attachments)
         content = list(first_attachment.content())
-        assert content == ["firs", "t attachment"]
+        assert content == [b"firs", b"t attachment"]
 
         second_attachment = next(attachments)
         content = list(second_attachment.content())
-        assert content == ["s", "econd attach", "ment"]
+        assert content == [b"s", b"econd attach", b"ment"]
 
         third_attachment = next(attachments)
         content = list(third_attachment.content())
-        assert content == ["third att", "achment"]
+        assert content == [b"third att", b"achment"]

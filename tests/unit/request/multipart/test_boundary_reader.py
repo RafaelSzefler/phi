@@ -25,10 +25,11 @@ CONTENT = (
 
 @pytest.fixture
 def br():
-    stream = BytesIO(CONTENT)
-    length = len(CONTENT)
+    content = CONTENT.encode("utf-8")
+    stream = BytesIO(content)
+    length = len(content)
     reader = BoundaryReader(
-        stream, "foo", length
+        stream, b"foo", length
     )
     reader.MIN_BUFFER_SIZE = 12
     return reader
@@ -38,23 +39,23 @@ class TestBoundaryReader(object):
     @pytest.mark.parametrize("buffer_size, result", [
         (
             15, [
-                ["preamble: a b c", " d e f g h i j ", "k l m n o q p r", " s test"],
-                ["Type: test\r\nHe", "ader: xyz\r\n\r\nfi", "rst attachment"],
-                ["\r\nsecon", "d attachment"]
+                [b"preamble: a b c", b" d e f g h i j ", b"k l m n o q p r", b" s test"],
+                [b"Type: test\r\nHe", b"ader: xyz\r\n\r\nfi", b"rst attachment"],
+                [b"\r\nsecon", b"d attachment"]
             ]
         ),
         (
             25, [
-                ["preamble: a b c d e f g h", " i j k l m n o q p r s test"],
-                ["Type: test\r\nHe", "ader: xyz\r\n\r\nfirst attachment"],
-                ["\r\nsecond attachment"]
+                [b"preamble: a b c d e f g h", b" i j k l m n o q p r s test"],
+                [b"Type: test\r\nHe", b"ader: xyz\r\n\r\nfirst attachment"],
+                [b"\r\nsecond attachment"]
             ]
         ),
         (
             50, [
-                ["preamble: a b c d e f g h i j k l m n o q p r s test"],
-                ["Type: test\r\nHeader: xyz\r\n\r\nfirst attachment"],
-                ["\r\nsecond attachment"]
+                [b"preamble: a b c d e f g h i j k l m n o q p r s test"],
+                [b"Type: test\r\nHeader: xyz\r\n\r\nfirst attachment"],
+                [b"\r\nsecond attachment"]
             ]
         )
     ])
@@ -105,14 +106,14 @@ class TestBoundaryReader(object):
 
     def test__read_chunk(self, br):
         data = []
-        for _ in xrange(10):
+        for _ in range(10):
             data.append(br._read_chunk(45))
         assert data == [
-            'preamble: a b c d e f g h i j k l m n o q p r',
-            ' s test\r\n--foo\r\nType: test\r\nHeader: xyz\r\n\r\nfi',
-            'rst attachment\r\n--foo\r\n\r\nsecond attachment\r\n-',
-            '-foo--\r\nepilogue',
-            '', '', '', '', '', ''
+            b'preamble: a b c d e f g h i j k l m n o q p r',
+            b' s test\r\n--foo\r\nType: test\r\nHeader: xyz\r\n\r\nfi',
+            b'rst attachment\r\n--foo\r\n\r\nsecond attachment\r\n-',
+            b'-foo--\r\nepilogue',
+            b'', b'', b'', b'', b'', b''
         ]
 
 

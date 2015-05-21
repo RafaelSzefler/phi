@@ -20,12 +20,8 @@ class BoundaryReader(object):
         self._read = 0
         self._stream = JoinedStream([stream])
         self._boundary = boundary
-        self._partial_boundary = PBOUNDARY.format(
-            boundary, crlf=CRLF
-        )
-        self._final_boundary = FBOUNDARY.format(
-            boundary, crlf=CRLF
-        )
+        self._partial_boundary = CRLF + b"--" + boundary + CRLF
+        self._final_boundary = CRLF + b"--" + boundary + b"--" + CRLF
         self._boundary_len = len(self._final_boundary)
         self._size = content_length
 

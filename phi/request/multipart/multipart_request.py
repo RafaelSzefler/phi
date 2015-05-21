@@ -13,7 +13,7 @@ class MultipartRequest(BaseRequest):
     READ_BUFFER = 2**12
 
     def _get_boundary_value(self):
-        full_content_type = self._content_type.partition(";")
+        full_content_type = self._content_type.partition(b";")
         boundary = full_content_type[2]
         if not boundary:
             raise ValidationError(
@@ -27,11 +27,11 @@ class MultipartRequest(BaseRequest):
             )
 
         boundary_value = boundary[BOUNDARY_LEN:]
-        return boundary_value.strip('"').rstrip()
+        return boundary_value.strip(b'"').rstrip()
 
     def attachments(self):
         boundary = self._get_boundary_value()
-        validate_multipart_boundary_value(boundary)
+        validate_multipart_boundary_value(boundary.decode("utf-8"))
 
         boundary_reader = BoundaryReader(
             self._content_stream, boundary, self.content_length
