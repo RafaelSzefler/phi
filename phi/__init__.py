@@ -2,6 +2,8 @@
 version = "0.2"
 
 from phi.app import Application
+from phi.defaults.action_controller import ActionController
+from phi.defaults.statics import StaticsHandler
 from phi.middleware import Middleware
 from phi.response.file import FileResponse
 from phi.response.http import HttpResponse
