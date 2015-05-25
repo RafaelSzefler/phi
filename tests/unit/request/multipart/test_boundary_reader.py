@@ -109,11 +109,11 @@ class TestBoundaryReader(object):
         for _ in range(10):
             data.append(br._read_chunk(45))
         assert data == [
-            b'preamble: a b c d e f g h i j k l m n o q p r',
-            b' s test\r\n--foo\r\nType: test\r\nHeader: xyz\r\n\r\nfi',
-            b'rst attachment\r\n--foo\r\n\r\nsecond attachment\r\n-',
-            b'-foo--\r\nepilogue',
-            b'', b'', b'', b'', b'', b''
+            b"preamble: a b c d e f g h i j k l m n o q p r",
+            b" s test\r\n--foo\r\nType: test\r\nHeader: xyz\r\n\r\nfi",
+            b"rst attachment\r\n--foo\r\n\r\nsecond attachment\r\n-",
+            b"-foo--\r\nepilogue",
+            b"", b"", b"", b"", b"", b""
         ]
 
 
