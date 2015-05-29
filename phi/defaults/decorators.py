@@ -22,12 +22,10 @@ def requires_methods(methods):
 
     @decorator
     def wrapper(fn, *args, **kwargs):
-        print args
-        print kwargs
         request = get_request_object(args)
         if request.method not in methods:
             msg = "Handler [{fn}] does not allow {method} method."
-            msg = msg.format(fn=fn.func_name, method=request.method)
+            msg = msg.format(fn=fn.__name__, method=request.method)
             raise HttpMethodNotAllowed(msg)
         return fn(*args, **kwargs)
 
