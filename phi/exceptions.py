@@ -21,9 +21,17 @@ class HttpBadRequest(HttpException):
     status = 400
 
 
+class HttpUnauthorized(HttpException):
+    status = 401
+
+
 class HttpForbidden(HttpException):
     status = 403
 
 
 class HttpNotFound(HttpException):
     status = 404
+
+
+class HttpMethodNotAllowed(HttpException):
+    status = 405

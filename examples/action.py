@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
-from phi import Application, URLRouter, HttpResponse, ActionController
+from phi import (
+    Application,
+    URLRouter,
+    HttpResponse,
+    ActionController,
+    requires_methods
+)
 
 url_router = URLRouter()
 
@@ -15,6 +21,10 @@ class Home(ActionController):
 
     def blah(self, request):
         return HttpResponse("blah")
+
+    @requires_methods(["POST"])
+    def post(self, request):
+        return HttpResponse("POST")
 
 url_router.add_route("home", "/{action}/", Home())
 
