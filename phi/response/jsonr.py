@@ -8,7 +8,8 @@ class JsonResponse(FiniteResponse):
 
     def __init__(self, content, status=None):
         super(JsonResponse, self).__init__()
-        self.content = json.dumps(content)
+        content = json.dumps(content, separators=(',', ':'))
+        self.content = content.encode(self.charset)
         self.content_length = len(self.content)
         if status:
             self.status = status

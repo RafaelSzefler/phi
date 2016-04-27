@@ -19,10 +19,10 @@ class TestJsonResponse(object):
         assert json_res.status == 200
 
     @pytest.mark.parametrize("obj, content, content_length", [
-        (None, "null", 4),
-        ({"test": 1}, '{"test": 1}', 11),
-        ([1, 2], "[1, 2]", 6),
-        ("test", '"test"', 6),
+        (None, b"null", 4),
+        ({"test": 1}, b'{"test":1}', 10),
+        ([1, 2], b"[1,2]", 5),
+        ("test", b'"test"', 6),
     ])
     def test_default__init__(self, obj, content, content_length):
         res = JsonResponse(obj)

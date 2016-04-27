@@ -8,6 +8,7 @@ from phi.middleware import Middleware
 from phi.response.file import FileResponse
 from phi.response.http import HttpResponse
 from phi.response.jsonr import JsonResponse
+from phi.response.msgpackr import MsgpackResponse
 from phi.testing.core import TestApplication
 from phi.url_routing.router import URLRouter
 from phi.defaults.decorators import requires_methods
@@ -20,6 +21,7 @@ __all__ = [
     "FileResponse",
     "HttpResponse",
     "JsonResponse",
+    "MsgpackResponse",
     "TestApplication",
     "URLRouter",
     "requires_methods",
