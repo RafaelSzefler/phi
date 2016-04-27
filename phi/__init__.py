@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-version = "0.3.2"
+version = "0.3.3"
 
 from phi.app import Application
 from phi.defaults.action_controller import ActionController
